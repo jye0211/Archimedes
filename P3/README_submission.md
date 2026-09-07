@@ -21,7 +21,7 @@ P3/
 ├─ final_models.pkl
 ├─ gate_params_final.pkl
 ├─ submission.csv
-└─ README.md
+└─ README_submission.md
 ```
 
 ### 입력 파일
