@@ -64,17 +64,17 @@ G-ORS / I-ORS / S-ORS
 
 모델은 미래 유의파고 자체를 직접 학습하지 않고 현재 유의파고 대비 변화량을 학습합니다.
 
-\[
+$$
 \Delta H_s(\tau)=H_s(t+\tau)-H_s(t)
-\]
+$$
 
 최종 예측은 다음과 같이 복원합니다.
 
-\[
+$$
 \widehat{H_s(t+\tau)}
 =
 H_s(t)+\widehat{\Delta H_s(\tau)}
-\]
+$$
 
 최종 `hs_pred`는 제출 규격에 맞추어 `0–30 m` 범위로 제한합니다.
 
@@ -202,9 +202,9 @@ Shape feature는 최근 기상 trajectory의 형태를 표현합니다.
 
 총 학습 모델 수는 다음과 같습니다.
 
-\[
+$$
 1\times10 + 5\times10 = 60
-\]
+$$
 
 즉 `final_models.pkl`에는 최종 inference에 필요한 **CatBoost 60개**만 저장됩니다.
 
@@ -235,13 +235,13 @@ CATBOOST_BASE_PARAMS = {
 
 각 리드타임에서는 10개 seed model의 `ΔHs` prediction을 **단순 산술평균(arithmetic mean)** 합니다.
 
-\[
+$$
 \widehat{\Delta H_s}
 =
 \frac{1}{10}
 \sum_{k=1}^{10}
 \widehat{\Delta H_s}^{(k)}
-\]
+$$
 
 Leaderboard 결과를 이용한 연속 blending coefficient, prediction correction 또는 추가 threshold는 사용하지 않습니다.
 
