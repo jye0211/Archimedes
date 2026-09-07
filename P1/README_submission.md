@@ -96,3 +96,23 @@ Flatline 강제 이상 처리, Gap Filling, Speckle Removal을 각각 비교한 
 - making_features.ipynb : 150개 피처를 만든 파일
 - pipeline_final.ipynb : 전체 재현 가능한 최종 파이프라인 (feature 파일 로드 -> 모델 -> 제출 파일 생성) 
 - submission.csv : 최종 제출 파일 (Public F1 0.690209 )
+
+
+
+## 모델 파일 사용법
+
+`final_xgb_model.pkl`은 학습이 완료된 XGBoost 이진 분류 모델을 저장한 파일이다. 모델은 수온 시계열에서 생성한 150개 피처를 입력받아 각 관측값의 이상 확률을 예측한다.
+
+```python
+import joblib
+
+# 학습된 모델 불러오기
+model = joblib.load("final_xgb_model.pkl")
+
+# 이상 확률 예측
+prob = model.predict_proba(X_test[all_features])[:, 1]
+```
+
+예측된 이상 확률에 관측소·수심층별 threshold를 적용한 뒤 Speckle-only 후처리를 수행하여 최종 이상 라벨을 생성한다.
+
+모델 파일은 예측 편의를 위한 학습 산출물이며, 배포 데이터로부터 모델을 다시 학습하고 제출 파일을 생성할 수 있도록 학습 및 예측 코드를 함께 제공한다.
